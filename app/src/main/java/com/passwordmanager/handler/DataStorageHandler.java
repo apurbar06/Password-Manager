@@ -75,7 +75,7 @@ public class DataStorageHandler {
         boolean saved = false;
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, Context.MODE_PRIVATE));
-            Log.d(TAG, "file created: " + fileName);
+            // Log.d(TAG, "file created: " + fileName);
             outputStreamWriter.write(data);
             outputStreamWriter.close();
             saved = true;

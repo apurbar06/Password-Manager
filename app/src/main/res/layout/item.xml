@@ -16,12 +16,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             tools:text="A"
+            android:id="@+id/short_title"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="title" />
+            tools:text="title"
+            android:id="@+id/title"
+            />
 
     </LinearLayout>
 
