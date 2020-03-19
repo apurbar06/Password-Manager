@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class NewItem extends AppCompatActivity {
+public class ItemDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_item);
+        setContentView(R.layout.activity_item_details);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -28,4 +28,3 @@ public class NewItem extends AppCompatActivity {
         }
     }
 }
-
