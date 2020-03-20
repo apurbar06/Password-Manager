@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -74,8 +75,9 @@ public class DataStorageHandler {
     public boolean saveData(String data) {
         boolean saved = false;
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, Context.MODE_PRIVATE));
-            // Log.d(TAG, "file created: " + fileName);
+            FileOutputStream fos = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);
+            Log.d(TAG, "file created: " + fileName);
             outputStreamWriter.write(data);
             outputStreamWriter.close();
             saved = true;
@@ -104,5 +106,14 @@ public class DataStorageHandler {
             e.printStackTrace();
         }
         return arr.toString();
+    }
+
+    public boolean saveItem(ItemDataStore i) {
+        ArrayList<ItemDataStore> itemDataStores = this.getItems();
+        i.setId(itemDataStores.size());
+        itemDataStores.add(i);
+        String str = this.makeSerializedData(itemDataStores);
+        this.saveData(str);
+        return true;
     }
 }

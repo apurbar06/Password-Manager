@@ -1,13 +1,17 @@
 package com.passwordmanager;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
 public class ItemDetails extends AppCompatActivity {
+
+    private static final String TAG = "ItemDetails";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,15 +20,19 @@ public class ItemDetails extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("arg");
+        Log.d(TAG, "onCreate: " + str);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
-            default:return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
