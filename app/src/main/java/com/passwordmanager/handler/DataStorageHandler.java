@@ -26,6 +26,10 @@ public class DataStorageHandler {
         this.mContext = context;
     }
 
+    /**
+     * get saved password from device storage in string from
+     * @return string
+     */
     private String getData() {
         StringBuilder str = new StringBuilder();
         try {
@@ -43,6 +47,10 @@ public class DataStorageHandler {
         return str.toString();
     }
 
+    /**
+     * get saved passwords in a array from
+     * @return ArrayList<ItemDataStore>
+     */
     public ArrayList<ItemDataStore> getItems() {
         String data = getData();
         ArrayList<ItemDataStore> items = new ArrayList<>();
@@ -72,6 +80,11 @@ public class DataStorageHandler {
         return items;
     }
 
+    /**
+     * save data to device storage
+     * @param data {@link String}
+     * @return boolean
+     */
     public boolean saveData(String data) {
         boolean saved = false;
         try {
@@ -89,6 +102,11 @@ public class DataStorageHandler {
     }
 
 
+    /**
+     * converts array to string for saving purpose
+     * @param items {@link ArrayList<ItemDataStore>}
+     * @return String
+     */
     public String makeSerializedData(ArrayList<ItemDataStore> items) {
         ArrayList<JSONObject> list = new ArrayList<>();
         JSONObject arr = new JSONObject();
@@ -108,6 +126,11 @@ public class DataStorageHandler {
         return arr.toString();
     }
 
+    /**
+     * helper function to save Item to storage
+     * @param i {@link ItemDataStore}
+     * @return boolean
+     */
     public boolean saveItem(ItemDataStore i) {
         ArrayList<ItemDataStore> itemDataStores = this.getItems();
         i.setId(itemDataStores.size());
