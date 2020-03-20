@@ -15,35 +15,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
+            android:textSize="@dimen/static_size"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size"
             tools:text="Title"
-            android:id="@+id/title"/>
+            android:id="@+id/item_details_title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username" />
+            android:text="Username"
+            android:textSize="@dimen/static_size"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size"
             tools:text="Username"
-            android:id="@+id/username"/>
+            android:id="@+id/item_details_username"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password" />
+            android:text="Password"
+            android:textSize="@dimen/static_size"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size"
             tools:text="Password"
-            android:id="@+id/password"/>
+            android:id="@+id/item_details_password"/>
     </LinearLayout>
 
 

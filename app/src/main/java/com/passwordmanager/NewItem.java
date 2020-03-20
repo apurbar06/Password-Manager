@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -54,6 +55,8 @@ public class NewItem extends AppCompatActivity {
         String p = password.getText().toString();
         ItemDataStore i = new ItemDataStore(1,t,u,p);
         storageHandler.saveItem(i);
+        Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+        this.finish();
 
         Log.d(TAG, String.format("addItem: t=%s u=%s p=%s", t, u, p));
     }

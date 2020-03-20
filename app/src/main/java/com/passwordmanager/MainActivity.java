@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int id = item.getId();
                 Intent intent = new Intent(MainActivity.this, ItemDetails.class);
-                intent.putExtra("arg", String.valueOf(id));
-                startActivityForResult(intent, OPEN_NEW_ACTIVITY);
+                intent.putExtra("index", String.valueOf(id));
+                startActivity(intent);
 
             }
         });
