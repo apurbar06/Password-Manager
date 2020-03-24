@@ -68,9 +68,11 @@ public class DataStorageHandler {
                 int id = (int) strItem.get("id");
                 String title = (String) strItem.get("title");
                 String username = (String) strItem.get("username");
+                String emailId = (String) strItem.get("emaiId");
+                String mobileNo = (String) strItem.get("mobileNo");
                 String password = (String) strItem.get("password");
                 // create data store
-                ItemDataStore item = new ItemDataStore(id, title, username, password);
+                ItemDataStore item = new ItemDataStore(id, title, username, emailId, mobileNo, password);
                 // push item to array
                 items.add(item);
             }
@@ -116,6 +118,8 @@ public class DataStorageHandler {
                 obj.put("id", item.getId());
                 obj.put("title", item.getTitle());
                 obj.put("username", item.getUsername());
+                obj.put("emailId", item.getEmailId());
+                obj.put("mobileNo", item.getMobileNo());
                 obj.put("password", item.getPassword());
                 list.add(obj);
             }

@@ -20,6 +20,8 @@ public class NewItem extends AppCompatActivity {
     private static final String TAG = "NewItem";
     EditText title;
     EditText username;
+    EditText emailId;
+    EditText mobileNo;
     EditText password;
     DataStorageHandler storageHandler;
 
@@ -32,6 +34,8 @@ public class NewItem extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         title = findViewById(R.id.title);
         username = findViewById(R.id.username);
+        emailId = findViewById(R.id.emailId);
+        mobileNo = findViewById(R.id.mobileNo);
         password = findViewById(R.id.password);
         storageHandler = new DataStorageHandler(this);
 
@@ -52,13 +56,15 @@ public class NewItem extends AppCompatActivity {
     public void addItem(View view) {
         String t = title.getText().toString();
         String u = username.getText().toString();
+        String e = emailId.getText().toString();
+        String m = mobileNo.getText().toString();
         String p = password.getText().toString();
-        ItemDataStore i = new ItemDataStore(1,t,u,p);
+        ItemDataStore i = new ItemDataStore(1,t,u,e,m,p);
         storageHandler.saveItem(i);
         Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
         this.finish();
 
-        Log.d(TAG, String.format("addItem: t=%s u=%s p=%s", t, u, p));
+        Log.d(TAG, String.format("addItem: t=%s u=%s e=%s m=%s p=%s", t, u, e, m, p));
     }
 }
 

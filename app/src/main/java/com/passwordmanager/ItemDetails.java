@@ -38,12 +38,18 @@ public class ItemDetails extends AppCompatActivity {
         ItemDataStore item = Items.get(intId);
         TextView title;
         TextView username;
+        TextView emailId;
+        TextView mobileNo;
         TextView password;
         title = findViewById(R.id.item_details_title);
         username = findViewById(R.id.item_details_username);
+        emailId = findViewById(R.id.item_details_emailId);
+        mobileNo = findViewById(R.id.item_details_mobileNo);
         password = findViewById(R.id.item_details_password);
         title.setText(item.getTitle());
         username.setText(item.getUsername());
+        emailId.setText(item.getEmailId());
+        mobileNo.setText(item.getMobileNo());
         password.setText(item.getPassword());
     }
 

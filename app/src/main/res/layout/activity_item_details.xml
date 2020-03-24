@@ -39,6 +39,30 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Email ID"
+            android:textSize="@dimen/static_size"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size"
+            tools:text="Email ID"
+            android:id="@+id/item_details_emailId"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mobile No."
+            android:textSize="@dimen/static_size"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size"
+            tools:text="Mobile No."
+            android:id="@+id/item_details_mobileNo"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Password"
             android:textSize="@dimen/static_size"/>
         <TextView
