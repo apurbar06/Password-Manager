@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public void refreshData() {
         linearLayout.removeAllViews();
         DataStorageHandler storage = new DataStorageHandler(this);
-        ArrayList<ItemDataStore> Items = storage.getItems();
+        ArrayList<ItemDataStore> Items = storage.sort(storage.getItems());
         for (ItemDataStore item : Items) {
             addItem(item);
         }
