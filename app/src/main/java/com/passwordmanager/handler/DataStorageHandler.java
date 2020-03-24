@@ -65,10 +65,11 @@ public class DataStorageHandler {
                 // get individual item
                 JSONObject strItem = (JSONObject) strItems.get(i);
                 // extract keys
+                Log.d(TAG, "getItems: "+strItem);
                 int id = (int) strItem.get("id");
                 String title = (String) strItem.get("title");
                 String username = (String) strItem.get("username");
-                String emailId = (String) strItem.get("emaiId");
+                String emailId = (String) strItem.get("emailId");
                 String mobileNo = (String) strItem.get("mobileNo");
                 String password = (String) strItem.get("password");
                 // create data store
