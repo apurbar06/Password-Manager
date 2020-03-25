@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="Title"
             android:textSize="@dimen/static_size"
-            />
+            android:layout_marginTop="15dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,11 +25,19 @@
             tools:text="Title"
             android:id="@+id/item_details_title"/>
 
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Username"
-            android:textSize="@dimen/static_size"/>
+            android:textSize="@dimen/static_size"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,11 +45,18 @@
             tools:text="Username"
             android:id="@+id/item_details_username"/>
 
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email ID"
-            android:textSize="@dimen/static_size"/>
+            android:textSize="@dimen/static_size"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,32 +64,50 @@
             tools:text="Email ID"
             android:id="@+id/item_details_emailId"/>
 
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mobile No."
-            android:textSize="@dimen/static_size"/>
+            android:text="Mobile No"
+            android:textSize="@dimen/static_size"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size"
-            tools:text="Mobile No."
+            tools:text="Mobile No"
             android:id="@+id/item_details_mobileNo"/>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Password"
-            android:textSize="@dimen/static_size"/>
+            android:textSize="@dimen/static_size"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size"
             tools:text="Password"
-            android:id="@+id/item_details_password"/>
+            android:id="@+id/item_details_password" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

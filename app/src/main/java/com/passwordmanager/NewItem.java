@@ -44,6 +44,7 @@ public class NewItem extends AppCompatActivity {
         index = getId();
         if (EDIT_ITEM) {
             // id user is trying to edit item fill the details from data storage
+            setTitle("Edit Item");
             ItemDataStore item = storageHandler.getItem(index);
             title.setText(item.getTitle());
             username.setText(item.getUsername());

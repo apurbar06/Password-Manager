@@ -28,21 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         linearLayout = findViewById(R.id.root);
-//        ItemDataStore i = new ItemDataStore(1, "jgsjtyx", "bmdjmtr", "c38738fxgn");
-//        addItem(i);
-
-
-//        ArrayList<ItemDataStore> items = new ArrayList<>();
-//        ItemDataStore i = new ItemDataStore(1, "a", "b", "c");
-//        ItemDataStore i2 = new ItemDataStore(1, "a", "b", "c");
-//        items.add(i);
-//        items.add(i2);
-//        String data = storage.makeSerializedData(items);
-//        boolean saved = storage.saveData(data);
-
-
-//        Log.d(TAG, "onCreate: " + I.toString());
-
         refreshData();
     }
 

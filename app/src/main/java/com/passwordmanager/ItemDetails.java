@@ -67,7 +67,7 @@ public class ItemDetails extends AppCompatActivity {
                 return true;
             case R.id.delete:
                 new AlertDialog.Builder(this)
-                        .setTitle("Do you really want to delete the item")
+                        .setTitle("Do you want to delete")
                         .setCancelable(true)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override

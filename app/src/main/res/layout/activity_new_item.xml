@@ -28,19 +28,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="email Id"
-            android:id="@+id/emailId"/>
+            android:id="@+id/emailId"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="mobile No"
-            android:id="@+id/mobileNo"/>
+            android:id="@+id/mobileNo"
+            android:inputType="phone"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:id="@+id/password"/>
+            android:id="@+id/password"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <Button
@@ -51,7 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:onClick="addItem"/>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

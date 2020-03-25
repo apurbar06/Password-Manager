@@ -14,10 +14,6 @@
         android:id="@+id/root"
         />
 
-
-
-
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="46dp"
