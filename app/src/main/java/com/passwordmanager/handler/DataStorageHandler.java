@@ -1,6 +1,7 @@
 package com.passwordmanager.handler;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.passwordmanager.model.ItemDataStore;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class DataStorageHandler {
     private static final String TAG = "DataStorageHandler";
@@ -28,6 +31,7 @@ public class DataStorageHandler {
 
     /**
      * get saved password from device storage in string from
+     *
      * @return string
      */
     private String getData() {
@@ -49,6 +53,7 @@ public class DataStorageHandler {
 
     /**
      * get saved passwords in a array from
+     *
      * @return ArrayList<ItemDataStore>
      */
     public ArrayList<ItemDataStore> getItems() {
@@ -63,17 +68,11 @@ public class DataStorageHandler {
             JSONArray strItems = new JSONArray(value);
             for (int i = 0; i < strItems.length(); i++) {
                 // get individual item
-                JSONObject strItem = (JSONObject) strItems.get(i);
+                JSONObject jsonObject = (JSONObject) strItems.get(i);
                 // extract keys
-                Log.d(TAG, "getItems: "+strItem);
-                int id = (int) strItem.get("id");
-                String title = (String) strItem.get("title");
-                String username = (String) strItem.get("username");
-                String emailId = (String) strItem.get("emailId");
-                String mobileNo = (String) strItem.get("mobileNo");
-                String password = (String) strItem.get("password");
+                Log.d(TAG, "getItems: " + jsonObject);
                 // create data store
-                ItemDataStore item = new ItemDataStore(id, title, username, emailId, mobileNo, password);
+                ItemDataStore item = new ItemDataStore(jsonObject);
                 // push item to array
                 items.add(item);
             }
@@ -85,6 +84,7 @@ public class DataStorageHandler {
 
     /**
      * save data to device storage
+     *
      * @param data {@link String}
      * @return boolean
      */
@@ -107,6 +107,7 @@ public class DataStorageHandler {
 
     /**
      * converts array to string for saving purpose
+     *
      * @param items {@link ArrayList<ItemDataStore>}
      * @return String
      */
@@ -115,14 +116,7 @@ public class DataStorageHandler {
         JSONObject arr = new JSONObject();
         try {
             for (ItemDataStore item : items) {
-                JSONObject obj = new JSONObject();
-                obj.put("id", item.getId());
-                obj.put("title", item.getTitle());
-                obj.put("username", item.getUsername());
-                obj.put("emailId", item.getEmailId());
-                obj.put("mobileNo", item.getMobileNo());
-                obj.put("password", item.getPassword());
-                list.add(obj);
+                list.add(item.toObject());
             }
             arr.put(key, list);
         } catch (JSONException e) {
@@ -133,6 +127,7 @@ public class DataStorageHandler {
 
     /**
      * helper function to save Item to storage
+     *
      * @param i {@link ItemDataStore}
      * @return boolean
      */
@@ -143,5 +138,26 @@ public class DataStorageHandler {
         String str = this.makeSerializedData(itemDataStores);
         this.saveData(str);
         return true;
+    }
+
+
+    public ArrayList<ItemDataStore> sort(ArrayList<ItemDataStore> items) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            items.sort(new SortByTitle());
+        } else {
+            Collections.sort(items, new SortByTitle());
+        }
+
+        return items;
+    }
+
+}
+
+class SortByTitle implements Comparator<ItemDataStore> {
+    @Override
+    public int compare(ItemDataStore o1, ItemDataStore o2) {
+        int firstChar = (o1.getTitle().toCharArray())[0];
+        int secondChar = (o2.getTitle().toCharArray())[0];
+        return firstChar - secondChar;
     }
 }
