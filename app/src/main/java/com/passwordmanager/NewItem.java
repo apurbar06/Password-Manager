@@ -1,5 +1,6 @@
 package com.passwordmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,9 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.passwordmanager.handler.DataStorageHandler;
 import com.passwordmanager.model.ItemDataStore;
 
-import java.util.ArrayList;
-
 public class NewItem extends AppCompatActivity {
+    public static final String ID = "id";
     private static final String TAG = "NewItem";
     EditText title;
     EditText username;
@@ -24,6 +24,8 @@ public class NewItem extends AppCompatActivity {
     EditText mobileNo;
     EditText password;
     DataStorageHandler storageHandler;
+    private boolean EDIT_ITEM = false;
+    private Integer index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,30 @@ public class NewItem extends AppCompatActivity {
         password = findViewById(R.id.password);
         storageHandler = new DataStorageHandler(this);
 
+        index = getId();
+        if (EDIT_ITEM) {
+            // id user is trying to edit item fill the details from data storage
+            ItemDataStore item = storageHandler.getItem(index);
+            title.setText(item.getTitle());
+            username.setText(item.getUsername());
+            emailId.setText(item.getEmailId());
+            mobileNo.setText(item.getMobileNo());
+            password.setText(item.getPassword());
+        }
+    }
+
+    /**
+     * get id if user is trying to edit item
+     * @return id
+     */
+    public Integer getId() {
+        Intent intent = getIntent();
+        String strId = intent.getStringExtra(NewItem.ID);
+        if (strId != null) {
+            EDIT_ITEM = true;
+            return Integer.parseInt(strId);
+        }
+        return null;
 
     }
 
@@ -59,12 +85,20 @@ public class NewItem extends AppCompatActivity {
         String e = emailId.getText().toString();
         String m = mobileNo.getText().toString();
         String p = password.getText().toString();
-        ItemDataStore i = new ItemDataStore(1,t,u,e,m,p);
-        storageHandler.saveItem(i);
-        Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+        if (EDIT_ITEM) {
+            ItemDataStore item = new ItemDataStore(index, t, u, e, m, p);
+            storageHandler.editItem(item);
+            Toast.makeText(this, "edited", Toast.LENGTH_SHORT).show();
+        } else {
+            ItemDataStore item = new ItemDataStore(0, t, u, e, m, p);
+            storageHandler.saveItem(item);
+            Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+        }
+
         this.finish();
 
         Log.d(TAG, String.format("addItem: t=%s u=%s e=%s m=%s p=%s", t, u, e, m, p));
     }
+
 }
 

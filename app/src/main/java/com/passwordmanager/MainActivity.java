@@ -3,7 +3,6 @@ package com.passwordmanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getId();
                 Intent intent = new Intent(MainActivity.this, ItemDetails.class);
                 intent.putExtra("index", String.valueOf(id));
-                startActivity(intent);
+                startActivityForResult(intent, OPEN_NEW_ACTIVITY);
 
             }
         });
@@ -89,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         Intent intent = new Intent(this, NewItem.class);
-
         startActivityForResult(intent, OPEN_NEW_ACTIVITY);
 
     }

@@ -1,26 +1,28 @@
 package com.passwordmanager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.passwordmanager.handler.DataStorageHandler;
 import com.passwordmanager.model.ItemDataStore;
 
-import java.util.ArrayList;
-
 public class ItemDetails extends AppCompatActivity {
     private static final String TAG = "ItemDetails";
+    private int index;
+    private DataStorageHandler storage;
+    private int NEW_ACTIVITY = 1;
 
 
     @Override
@@ -33,10 +35,13 @@ public class ItemDetails extends AppCompatActivity {
         Intent intent = getIntent();
         String str = intent.getStringExtra("index");
         Log.d(TAG, "onCreate: " + str);
-        int intId = Integer.parseInt(str);
-        DataStorageHandler storage = new DataStorageHandler(this);
-        ArrayList<ItemDataStore> Items = storage.getItems();
-        ItemDataStore item = Items.get(intId);
+        index = Integer.parseInt(str);
+        storage = new DataStorageHandler(this);
+        init();
+    }
+
+    public void init() {
+        ItemDataStore item = storage.getItem(index);
         TextView title;
         TextView username;
         TextView emailId;
@@ -54,16 +59,39 @@ public class ItemDetails extends AppCompatActivity {
         password.setText(item.getPassword());
     }
 
-
-
-
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
+                return true;
+            case R.id.delete:
+                new AlertDialog.Builder(this)
+                        .setTitle("Do you really want to delete the item")
+                        .setCancelable(true)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                storage.deleteItem(index);
+                                Toast.makeText(ItemDetails.this, "Deleted", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Toast.makeText(ItemDetails.this, "Item Not Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .create()
+                        .show();
+                return true;
+            case R.id.edit:
+                Intent intent = new Intent(this, NewItem.class);
+                intent.putExtra(NewItem.ID, String.valueOf(this.index));
+                startActivityForResult(intent, NEW_ACTIVITY);
+
+                // Log.d(TAG, "onOptionsItemSelected: edit");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -78,6 +106,15 @@ public class ItemDetails extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == this.NEW_ACTIVITY) {
+            // refresh data after edit
+            init();
+        }
+        Log.d(TAG, "onActivityResult: ");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 
 }

@@ -82,13 +82,24 @@ public class DataStorageHandler {
         return items;
     }
 
+    public ItemDataStore getItem(int index) {
+        ArrayList<ItemDataStore> items = getItems();
+        for (ItemDataStore item : items) {
+            int id = item.getId();
+            if (id == index) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     /**
      * save data to device storage
      *
      * @param data {@link String}
      * @return boolean
      */
-    public boolean saveData(String data) {
+    private boolean saveData(String data) {
         boolean saved = false;
         try {
             FileOutputStream fos = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -111,7 +122,7 @@ public class DataStorageHandler {
      * @param items {@link ArrayList<ItemDataStore>}
      * @return String
      */
-    public String makeSerializedData(ArrayList<ItemDataStore> items) {
+    private String makeSerializedData(ArrayList<ItemDataStore> items) {
         ArrayList<JSONObject> list = new ArrayList<>();
         JSONObject arr = new JSONObject();
         try {
@@ -123,6 +134,11 @@ public class DataStorageHandler {
             e.printStackTrace();
         }
         return arr.toString();
+    }
+
+    public void save(ArrayList<ItemDataStore> items) {
+        String str = makeSerializedData(items);
+        saveData(str);
     }
 
     /**
@@ -140,6 +156,27 @@ public class DataStorageHandler {
         return true;
     }
 
+    /**
+     * edit item and save data to storage
+     *
+     * @param item edited item
+     */
+    public void editItem(ItemDataStore item) {
+        ArrayList<ItemDataStore> items = getItems();
+        ArrayList<ItemDataStore> editedItems = new ArrayList<>();
+        for (ItemDataStore elm : items) {
+            if (item.getId() == elm.getId()) {
+                Log.d(TAG, "editItem: replace");
+                editedItems.add(item);
+            } else {
+                Log.d(TAG, "editItem: new");
+                editedItems.add(elm);
+            }
+
+        }
+        save(editedItems);
+    }
+
 
     public ArrayList<ItemDataStore> sort(ArrayList<ItemDataStore> items) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -149,6 +186,24 @@ public class DataStorageHandler {
         }
 
         return items;
+    }
+
+    /**
+     * delete item at index and save
+     * @param index index to delete
+     */
+    public void deleteItem(int index) {
+        ArrayList<ItemDataStore> items = getItems();
+        ArrayList<ItemDataStore> newItems = new ArrayList<>();
+        try {
+            for (ItemDataStore item : items) {
+                if (index == item.getId()) continue;
+                newItems.add(item);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        save(newItems);
     }
 
 }
