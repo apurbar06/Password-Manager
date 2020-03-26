@@ -191,6 +191,7 @@ public class DataStorageHandler {
 
     /**
      * delete item at index and save
+     *
      * @param index index to delete
      */
     public void deleteItem(int index) {
@@ -199,6 +200,27 @@ public class DataStorageHandler {
         try {
             for (ItemDataStore item : items) {
                 if (index == item.getId()) continue;
+                newItems.add(item);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        save(newItems);
+    }
+
+    /**
+     * delete item accordingly array of index and save
+     *
+     * @param index index to delete
+     */
+    public void deleteItems(ArrayList<Integer> index) {
+        ArrayList<ItemDataStore> items = getItems();
+        ArrayList<ItemDataStore> newItems = new ArrayList<>();
+        try {
+            for (ItemDataStore item : items) {
+                // if the array contains the id skip the item
+                // that deletes the item
+                if (index.contains(item.getId())) continue;
                 newItems.add(item);
             }
         } catch (Exception ex) {

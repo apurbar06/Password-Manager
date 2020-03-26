@@ -8,26 +8,32 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginLeft="15dp">
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/short_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            tools:text="A"
-            android:id="@+id/short_title"
             android:background="@drawable/circle"
             android:gravity="center"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF"
+            tools:text="A" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="title"
-            android:id="@+id/title"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            tools:text="title" />
 
     </LinearLayout>
 
@@ -35,7 +41,7 @@
         android:id="@+id/divider"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_marginHorizontal="15dp"
+        android:background="?android:attr/listDivider" />
 
 </LinearLayout>
