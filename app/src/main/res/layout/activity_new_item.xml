@@ -59,7 +59,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:onClick="addItem"/>
+        android:onClick="addItem"
+        android:layout_marginBottom="10dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

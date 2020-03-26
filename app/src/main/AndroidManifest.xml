@@ -15,6 +15,9 @@
         <activity
             android:name=".NewItem"
             android:label="Add New Item"></activity>
+        <activity
+            android:name=".AllItems"
+            android:label="All Items"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
