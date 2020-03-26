@@ -73,6 +73,7 @@ public class DataStorageHandler {
                 Log.d(TAG, "getItems: " + jsonObject);
                 // create data store
                 ItemDataStore item = new ItemDataStore(jsonObject);
+                item.setId(i);
                 // push item to array
                 items.add(item);
             }
