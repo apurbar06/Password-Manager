@@ -1,14 +1,18 @@
 package com.passwordmanager;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,19 +20,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.passwordmanager.handler.DataStorageHandler;
+import com.passwordmanager.handler.SearchListAdapter;
 import com.passwordmanager.model.ItemDataStore;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class AllItems extends AppCompatActivity {
+public class AllItems extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     public static final int OPEN_NEW_ACTIVITY = 12345;
-    private static final String TAG = "Allitems";
+    private static final String TAG = "AllItems";
     LinearLayout linearLayout;
     private boolean readyForDelete = false;
     private HashSet<Integer> listOfItemToDelete = new HashSet<>();
     private DataStorageHandler storage;
+    private SearchView searchView;
+    private MenuItem searchMenuItem;
+    private SearchListAdapter searchListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,13 @@ public class AllItems extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         linearLayout = findViewById(R.id.root);
         refreshData();
+//        // Get the intent, verify the action and get the query
+//        Intent intent = getIntent();
+//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            Log.d(TAG, String.format("loadedData: %s ",query));
+//            //doSearch(query);
+//        }
     }
 
 
@@ -125,6 +140,19 @@ public class AllItems extends AppCompatActivity {
         linearLayout.addView(view);
     }
 
+//    public void doSearch(String key){
+//        listOfItemToDelete.clear();
+//        linearLayout.removeAllViews();
+//        storage = new DataStorageHandler(this);
+//        ArrayList<ItemDataStore> Items = storage.sort(storage.getItems());
+//        for (ItemDataStore item : Items) {
+//             if (key.contains(item.getTitle())){
+//                 addItem(item, readyForDelete);
+//             }
+//        }
+//
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -151,10 +179,20 @@ public class AllItems extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        getMenuInflater().inflate(R.menu.menu_mark, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_mark, menu);
         // adding the delete menu by default
-        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        inflater.inflate(R.menu.menu_delete, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchMenuItem = menu.findItem(R.id.search);
+        searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        //searchView.setSubmitButtonEnabled(true);
+        //searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -168,7 +206,7 @@ public class AllItems extends AppCompatActivity {
         MenuItem delete = menu.findItem(R.id.delete);
         MenuItem mark = menu.findItem(R.id.mark);
         if (readyForDelete) {
-            mark.setTitle("Un Mark");
+            mark.setTitle("Undo");
             // if the array of index has items show the delete menu of hide it
             boolean shouldShowDeleteMenu = listOfItemToDelete.size() > 0;
             delete.setVisible(shouldShowDeleteMenu);
@@ -211,6 +249,21 @@ public class AllItems extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.d(TAG, "onQueryTextChange: " + query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        searchListAdapter.getFilter().filter(newText);
+
+
+        return false;
     }
 }
 
