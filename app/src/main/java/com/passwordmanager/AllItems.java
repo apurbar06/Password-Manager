@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.passwordmanager.handler.DataStorageHandler;
-import com.passwordmanager.handler.SearchListAdapter;
 import com.passwordmanager.model.ItemDataStore;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
     private DataStorageHandler storage;
     private SearchView searchView;
     private MenuItem searchMenuItem;
-    private SearchListAdapter searchListAdapter;
+    private String searchKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +44,7 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
         setContentView(R.layout.activity_main);
         linearLayout = findViewById(R.id.root);
         refreshData();
-//        // Get the intent, verify the action and get the query
-//        Intent intent = getIntent();
-//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Log.d(TAG, String.format("loadedData: %s ",query));
-//            //doSearch(query);
-//        }
+
     }
 
 
@@ -62,7 +55,11 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
         storage = new DataStorageHandler(this);
         ArrayList<ItemDataStore> Items = storage.sort(storage.getItems());
         for (ItemDataStore item : Items) {
-            addItem(item, readyForDelete);
+            String title = item.getTitle();
+            if (searchKey == "" || title.contains(searchKey)){
+                addItem(item, readyForDelete);
+            }
+
         }
     }
 
@@ -140,18 +137,7 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
         linearLayout.addView(view);
     }
 
-//    public void doSearch(String key){
-//        listOfItemToDelete.clear();
-//        linearLayout.removeAllViews();
-//        storage = new DataStorageHandler(this);
-//        ArrayList<ItemDataStore> Items = storage.sort(storage.getItems());
-//        for (ItemDataStore item : Items) {
-//             if (key.contains(item.getTitle())){
-//                 addItem(item, readyForDelete);
-//             }
-//        }
-//
-//    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -169,12 +155,6 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_delete, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -191,7 +171,7 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
         //searchView.setSubmitButtonEnabled(true);
-        //searchView.setOnQueryTextListener(this);
+        searchView.setOnQueryTextListener(this);
 
         return true;
     }
@@ -254,15 +234,15 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.d(TAG, "onQueryTextChange: " + query);
+
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        searchListAdapter.getFilter().filter(newText);
-
-
+        Log.d(TAG, "onQueryTextChange: " + newText);
+        searchKey = newText;
+        refreshData();
         return false;
     }
 }
