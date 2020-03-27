@@ -19,37 +19,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class DataStorageHandler {
+public class DataStorageHandler extends BaseStorageHandler {
     private static final String TAG = "DataStorageHandler";
     private String key = "passwords";
     private Context mContext;
-    private String fileName = "passwords.txt";
 
     public DataStorageHandler(Context context) {
+        super(context,"passwords.txt");
         this.mContext = context;
     }
 
-    /**
-     * get saved password from device storage in string from
-     *
-     * @return string
-     */
-    private String getData() {
-        StringBuilder str = new StringBuilder();
-        try {
-            InputStreamReader reader = new InputStreamReader(mContext.openFileInput(fileName));
-            int i;
-            while ((i = reader.read()) != -1) {
-                str.append((char) i);
-                // Log.d(TAG, String.format("loadData: i=%s (char) i=%s", i, str));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return str.toString();
-    }
 
     /**
      * get saved passwords in a array from
@@ -93,29 +72,6 @@ public class DataStorageHandler {
         }
         return null;
     }
-
-    /**
-     * save data to device storage
-     *
-     * @param data {@link String}
-     * @return boolean
-     */
-    private boolean saveData(String data) {
-        boolean saved = false;
-        try {
-            FileOutputStream fos = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);
-            Log.d(TAG, "file created: " + fileName);
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-            saved = true;
-        } catch (Exception e) {
-            Log.d(TAG, "error: ");
-            e.printStackTrace();
-        }
-        return saved;
-    }
-
 
     /**
      * converts array to string for saving purpose
