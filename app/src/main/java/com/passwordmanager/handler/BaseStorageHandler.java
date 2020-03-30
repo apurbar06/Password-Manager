@@ -20,7 +20,7 @@ public class BaseStorageHandler {
     }
 
     /**
-     * get saved password from device storage in string from
+     * get saved password from device storage in string form
      *
      * @return string
      */

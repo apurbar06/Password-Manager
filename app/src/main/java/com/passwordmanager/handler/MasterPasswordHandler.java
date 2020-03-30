@@ -17,7 +17,7 @@ public class MasterPasswordHandler extends BaseStorageHandler {
     }
 
     public boolean verifyPassword(String password) {
-        String storePassword = getData();
-        return storePassword.equals(password);
+        String storedPassword = getData();
+        return storedPassword.equals(password);
     }
 }

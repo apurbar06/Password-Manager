@@ -56,7 +56,7 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
         ArrayList<ItemDataStore> Items = storage.sort(storage.getItems());
         for (ItemDataStore item : Items) {
             String title = item.getTitle();
-            if (searchKey == "" || title.contains(searchKey)){
+            if (searchKey == "" || title.toLowerCase().contains(searchKey)){
                 addItem(item, readyForDelete);
             }
 
@@ -241,7 +241,7 @@ public class AllItems extends AppCompatActivity implements SearchView.OnQueryTex
     @Override
     public boolean onQueryTextChange(String newText) {
         Log.d(TAG, "onQueryTextChange: " + newText);
-        searchKey = newText;
+        searchKey = newText.toLowerCase();
         refreshData();
         return false;
     }

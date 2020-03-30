@@ -190,8 +190,8 @@ public class DataStorageHandler extends BaseStorageHandler {
 class SortByTitle implements Comparator<ItemDataStore> {
     @Override
     public int compare(ItemDataStore o1, ItemDataStore o2) {
-        int firstChar = (o1.getTitle().toCharArray())[0];
-        int secondChar = (o2.getTitle().toCharArray())[0];
-        return firstChar - secondChar;
+//        int firstChar = (o1.getTitle().toCharArray())[0];
+//        int secondChar = (o2.getTitle().toCharArray())[0];
+        return o1.getTitle().compareTo(o2.getTitle());
     }
 }

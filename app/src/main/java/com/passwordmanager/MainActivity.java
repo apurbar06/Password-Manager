@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         final MasterPasswordHandler master = new MasterPasswordHandler(this);
 
-        //A functionality that extract the master password from database
-        //and if it is not null then make the masterPassword false
 
         if (master.hasPassword()) {
             // master password exist verify master password
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
-            // master password does't exist add password
+            // master password does't exist, add password
             Button set = (Button) findViewById(R.id.set);
             set.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -68,23 +66,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-//        setContentView(R.layout.door1);
-//        Button enter = (Button) findViewById(R.id.enter);
-//        enter.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                EditText passwordEditText = (EditText) findViewById(R.id.masterPassword);
-//                if(passwordEditText.getText().toString().equals("1234")){
-//                    Intent intent = new Intent(MainActivity.this, AllItems.class);
-//                    startActivity(intent);
-//                    finish();
-//
-//                }
-//                else {
-//                    Toast.makeText(MainActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+
     }
 
 
