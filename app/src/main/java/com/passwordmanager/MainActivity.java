@@ -1,7 +1,9 @@
 package com.passwordmanager;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,13 +12,31 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.passwordmanager.handler.MasterPasswordHandler;
+import com.passwordmanager.handler.RecoveryGen;
+
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public boolean codeRunning = false;
+    RecoveryGen rg;
     private boolean masterPassword;
 
+    private boolean getRecoveryGen() {
+        try {
+            if (rg == null) {
+                rg = new RecoveryGen(this);
+                Log.d(TAG, "getRecoveryGen: RecoveryGen init finish");
+                Toast.makeText(this, "RecoveryGen init finish", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +67,30 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // master password does't exist, add password
             Button set = (Button) findViewById(R.id.set);
+            Button generate = (Button) findViewById(R.id.genarate);
+            generate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!codeRunning) {
+                        codeRunning = true;
+                        EditText createPassword = (EditText) findViewById(R.id.createPassword);
+                        EditText confirmPassword = (EditText) findViewById(R.id.confirmPassword);
+                        String password = createPassword.getText().toString();
+                        String str = "";
+                        if (password.equals(confirmPassword.getText().toString())) {
+                            getRecoveryGen();
+                            str = rg.encryptString(password);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Retry", Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+                        codeRunning = false;
+                    } else {
+                        Toast.makeText(MainActivity.this, "code is running", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
             set.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     EditText createPassword = (EditText) findViewById(R.id.createPassword);
@@ -64,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
 
 
     }
